@@ -6,6 +6,7 @@ param(
     [string]$MainBranch = "main",
     [switch]$SkipPublish,
     [switch]$SkipBuild,
+    [bool]$RunHealthCheck = $true,
     [bool]$OpenAfterPublish = $true,
     [bool]$OpenRepoAfterChecks = $false
 )
@@ -17,6 +18,11 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $repoRoot
 
 Write-Host "Running open-source workflow bootstrap..."
+
+if ($RunHealthCheck) {
+    Write-Host "Running pre-publish health check..."
+    & .\scripts\open-source-health.ps1 -Owner $Owner -Repo $Repo
+}
 
 if (Get-Command dotnet -ErrorAction SilentlyContinue) {
     $hasWorkingDotnet = $true

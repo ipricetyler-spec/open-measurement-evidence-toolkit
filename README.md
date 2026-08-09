@@ -49,6 +49,13 @@ Use this when you want a complete local maintenance check before publish:
 ```
 
 It runs `maintain.ps1`, then publish. If .NET is installed locally, full build/test checks run; otherwise boundary checks run only.
+By default, the workflow now also runs `open-source-health.ps1` before maintenance checks.
+
+Skip pre-publish validation when needed:
+
+```powershell
+.\scripts\run-open-source-workflow.ps1 -RunHealthCheck:$false
+```
 
 Add the desktop shortcut for both actions:
 
