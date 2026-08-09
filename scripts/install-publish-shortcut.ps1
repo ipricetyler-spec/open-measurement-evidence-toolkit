@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
-$root = Resolve-Path "$PSScriptRoot\.."
+$root = (Resolve-Path "$PSScriptRoot\..").Path
 $desktop = [Environment]::GetFolderPath('Desktop')
 $shortcutPath = Join-Path $desktop 'Publish Open Measurement Evidence Toolkit.lnk'
 $target = Join-Path $root 'scripts\publish-one-click.bat'
