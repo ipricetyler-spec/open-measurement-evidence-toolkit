@@ -14,6 +14,12 @@ After repository identity is confirmed, use the one-click launcher:
 
 This will prompt for a PAT once per run if one is not already set in `$env:GITHUB_TOKEN`.
 
+Install a desktop shortcut for no-path-run access:
+
+```powershell
+.\scripts\install-publish-shortcut.ps1
+```
+
 If you'd rather keep it scripted, use:
 
 ```powershell

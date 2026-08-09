@@ -20,6 +20,12 @@ From Windows Explorer, double-click:
 
 That launcher will prompt for a GitHub token once per run and then publish `main` and `v0.1.0-rc.1`.
 
+Or install a desktop shortcut to run it with one click from your desktop:
+
+```powershell
+.\scripts\install-publish-shortcut.ps1
+```
+
 From a PowerShell prompt:
 
 ```powershell
