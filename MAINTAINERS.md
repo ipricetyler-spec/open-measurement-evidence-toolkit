@@ -20,6 +20,12 @@ Install a desktop shortcut for no-path-run access:
 .\scripts\install-publish-shortcut.ps1
 ```
 
+The default launcher behavior opens the repository page when finished. Disable for background runs:
+
+```powershell
+.\scripts\publish-one-click.ps1 -OpenAfterPublish:$false
+```
+
 If you'd rather keep it scripted, use:
 
 ```powershell

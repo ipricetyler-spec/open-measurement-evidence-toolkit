@@ -32,6 +32,14 @@ From a PowerShell prompt:
 .\scripts\publish-one-click.ps1
 ```
 
+By default, the launcher opens the repo page when it finishes:
+
+```powershell
+.\scripts\publish-one-click.ps1 -OpenAfterPublish:$false
+```
+
+Set to `$false` when you want a silent publish.
+
 ## Build and test
 
 Requirements: Windows and the .NET 8 SDK.

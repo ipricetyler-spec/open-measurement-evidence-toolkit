@@ -3,7 +3,8 @@ param(
     [string]$Repo = "open-measurement-evidence-toolkit",
     [ValidateSet("public", "private")]
     [string]$Visibility = "public",
-    [string]$MainBranch = "main"
+    [string]$MainBranch = "main",
+    [bool]$OpenAfterPublish = $true
 )
 
 $ErrorActionPreference = "Stop"
@@ -36,6 +37,14 @@ if (-not $env:GITHUB_TOKEN) {
         Invoke-LocalPublish -Owner $Owner -Repo $Repo -MainBranch $MainBranch
         Write-Host "Done."
         Write-Host "Tip: keep using this for subsequent runs as long as git credentials are valid."
+        if ($OpenAfterPublish) {
+            try {
+                Start-Process "https://github.com/$Owner/$Repo"
+                Write-Host "Opened https://github.com/$Owner/$Repo"
+            } catch {
+                Write-Warning "Publish completed, but could not open browser: $($_.Exception.Message)"
+            }
+        }
         return
     } catch {
         Write-Host "Local publish path unavailable: $($_.Exception.Message)"
@@ -53,3 +62,11 @@ if (-not $env:GITHUB_TOKEN) {
 
 Write-Host "Done."
 Write-Host "Tip: save this token in session scope only (`$env:GITHUB_TOKEN) for future runs."
+if ($OpenAfterPublish) {
+    try {
+        Start-Process "https://github.com/$Owner/$Repo"
+        Write-Host "Opened https://github.com/$Owner/$Repo"
+    } catch {
+        Write-Warning "Publish completed, but could not open browser: $($_.Exception.Message)"
+    }
+}
