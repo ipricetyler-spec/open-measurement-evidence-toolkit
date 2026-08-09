@@ -61,7 +61,16 @@ if (Test-Path ".github/workflows/ci.yml") {
 }
 
 if (Get-Command dotnet -ErrorAction SilentlyContinue) {
-    Write-Host "PASS: dotnet command available."
+    try {
+        $dotnetVersion = (& { dotnet --version } 2>$null)
+        if ($LASTEXITCODE -eq 0 -and $dotnetVersion) {
+            Write-Host "PASS: dotnet SDK available ($dotnetVersion)."
+        } else {
+            Write-Host "INFO: dotnet command exists but SDK is not available (`dotnet --version` did not return a valid version)."
+        }
+    } catch {
+        Write-Host "INFO: dotnet command exists but is not yet functional in this environment."
+    }
 } else {
     Write-Host "INFO: dotnet command not available. Full CI/build checks will be limited."
 }
