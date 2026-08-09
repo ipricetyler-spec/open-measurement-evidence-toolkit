@@ -12,6 +12,20 @@ The code is a pre-release extraction undergoing public-readiness review. The API
 
 Open Measurement Evidence Toolkit is licensed under the Apache License 2.0 (ASL-2.0). See [LICENSE](LICENSE) for the full text.
 
+## Quick publish (one click)
+
+From Windows Explorer, double-click:
+
+- [scripts/publish-one-click.bat](scripts/publish-one-click.bat)
+
+That launcher will prompt for a GitHub token once per run and then publish `main` and `v0.1.0-rc.1`.
+
+From a PowerShell prompt:
+
+```powershell
+.\scripts\publish-one-click.ps1
+```
+
 ## Build and test
 
 Requirements: Windows and the .NET 8 SDK.

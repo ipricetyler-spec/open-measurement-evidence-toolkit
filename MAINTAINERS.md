@@ -6,11 +6,19 @@ Maintainer responsibilities include issue triage, pull-request review, release m
 
 ### Publish bootstrap (local)
 
-After repository identity is confirmed, run from `public-repo`:
+After repository identity is confirmed, use the one-click launcher:
+
+```powershell
+.\scripts\publish-one-click.bat
+```
+
+This will prompt for a PAT once per run if one is not already set in `$env:GITHUB_TOKEN`.
+
+If you'd rather keep it scripted, use:
 
 ```powershell
 $env:GITHUB_TOKEN = "<your-token>"
-.\scripts\publish-to-github.ps1 -Owner "<owner>" -Repo "open-measurement-evidence-toolkit" -Visibility "public"
+.\scripts\publish-one-click.ps1
 ```
 
-The token should include repository create/push and, if available, workflow/visibility management scopes.
+Token should include `repo` scope, and `workflow` if workflow files will be introduced later.
