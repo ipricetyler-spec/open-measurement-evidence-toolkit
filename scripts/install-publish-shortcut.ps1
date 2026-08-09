@@ -21,3 +21,20 @@ $shortcut.Save()
 
 Write-Host "Created shortcut: $shortcutPath"
 Write-Host "Target: $target"
+
+$workflowShortcutPath = Join-Path $desktop 'Run Open Source Workflow.lnk'
+$workflowTarget = Join-Path $root 'scripts\run-open-source-workflow.bat'
+if (-not (Test-Path $workflowTarget)) {
+    throw "Expected workflow script not found: $workflowTarget"
+}
+
+$workflowShortcut = $shell.CreateShortcut($workflowShortcutPath)
+$workflowShortcut.TargetPath = $workflowTarget
+$workflowShortcut.WorkingDirectory = $root
+$workflowShortcut.Arguments = ""
+$workflowShortcut.Description = "Run maintenance checks and publish open-source toolkit"
+$workflowShortcut.IconLocation = "shell32.dll,132"
+$workflowShortcut.Save()
+
+Write-Host "Created shortcut: $workflowShortcutPath"
+Write-Host "Target: $workflowTarget"

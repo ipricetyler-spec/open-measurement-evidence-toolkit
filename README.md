@@ -40,6 +40,27 @@ By default, the launcher opens the repo page when it finishes:
 
 Set to `$false` when you want a silent publish.
 
+## Full workflow (checks + publish)
+
+Use this when you want a complete local maintenance check before publish:
+
+```powershell
+.\scripts\run-open-source-workflow.ps1
+```
+
+It runs `maintain.ps1`, then publish. If .NET is installed locally, full build/test checks run; otherwise boundary checks run only.
+
+Add the desktop shortcut for both actions:
+
+```powershell
+.\scripts\install-publish-shortcut.ps1
+```
+
+This creates:
+
+- `Publish Open Measurement Evidence Toolkit.lnk`
+- `Run Open Source Workflow.lnk`
+
 ## Build and test
 
 Requirements: Windows and the .NET 8 SDK.

@@ -26,6 +26,20 @@ The default launcher behavior opens the repository page when finished. Disable f
 .\scripts\publish-one-click.ps1 -OpenAfterPublish:$false
 ```
 
+For full checks plus publish:
+
+```powershell
+.\scripts\run-open-source-workflow.ps1
+```
+
+This runs `maintain.ps1` and then publish.
+
+```powershell
+.\scripts\run-open-source-workflow.ps1 -SkipBuild
+```
+
+Use `-SkipBuild` on systems without .NET installed.
+
 If you'd rather keep it scripted, use:
 
 ```powershell
