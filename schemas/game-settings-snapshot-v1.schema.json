@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:open-measurement-evidence:schema:game-settings-snapshot:v1",
+  "title": "Open Measurement Evidence game settings snapshot v1",
+  "$comment": "This portable JSON Schema validates the exchange structure. The compiled open-measurement-evidence validator is authoritative for NFC normalization, the complete .NET control-character rule, and Windows reserved executable-base names.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "game", "environment", "settings"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "game": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["executableBaseName", "buildId", "graphicsApi"],
+      "properties": {
+        "executableBaseName": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 255,
+          "pattern": "^[^\\\\/:*?\"<>|\\u0000-\\u001F\\u007F-\\u009F]{1,251}\\.[Ee][Xx][Ee]$",
+          "allOf": [
+            { "not": { "pattern": "^\\s|\\s$" } },
+            { "not": { "pattern": "[ .]\\.[Ee][Xx][Ee]$" } },
+            { "not": { "pattern": "^(?:[Cc][Oo][Nn]|[Pp][Rr][Nn]|[Aa][Uu][Xx]|[Nn][Uu][Ll]|[Cc][Ll][Oo][Cc][Kk]\\$|[Cc][Oo][Mm](?:[1-9]|¹|²|³)|[Ll][Pp][Tt](?:[1-9]|¹|²|³))\\.[Ee][Xx][Ee]$" } }
+          ]
+        },
+        "buildId": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "graphicsApi": { "enum": ["DX9", "DX11", "DX12", "OpenGL", "Vulkan", "Other", "Unknown"] }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["displayMode", "refreshHz", "frameGenerationState", "frameGenerationTechnology", "frameGenerationEvidenceSource"],
+      "properties": {
+        "displayMode": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "refreshHz": { "type": "number", "exclusiveMinimum": 0, "maximum": 1000 },
+        "frameGenerationState": { "const": "off" },
+        "frameGenerationTechnology": { "const": "none" },
+        "frameGenerationEvidenceSource": { "enum": ["verified-config", "verified-api"] }
+      }
+    },
+    "settings": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["key", "value", "source"],
+        "properties": {
+          "key": { "type": "string", "minLength": 1, "maxLength": 128 },
+          "value": { "type": "string", "minLength": 1, "maxLength": 512 },
+          "source": { "enum": ["verified-config", "verified-api"] }
+        }
+      }
+    }
+  }
+}

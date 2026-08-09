@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "runId": "39ed72ce-8aa3-4274-912c-923b2936d3d1",
+  "createdUtc": "2026-08-08T02:30:00Z",
+  "capture": {
+    "source": "synthetic-fixture",
+    "sourceVersion": "1.0",
+    "sourceSha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "captureSchemaVersion": "synthetic-v1",
+    "timingDefinitionVersion": "frame-analysis-v1-draft",
+    "timingBasis": "DisplayedTime",
+    "targetProcessId": 4242,
+    "targetSwapChainAddress": "0xABC",
+    "sessionName": "synthetic-session-1234",
+    "noTrackInput": true,
+    "capturePolicyHash": "58706ECC4A18B89B23F6B8ADA88870B1EF2657CBA7353FC4C54730D0304D6575",
+    "captureInvocationHash": "7A3BED868CCCBE0C76540EB18BF6D1B04516E9C04D8841A8D91171F7E5DF3C00"
+  },
+  "game": {
+    "executableBaseName": "testgame.exe",
+    "buildId": "synthetic-build-1",
+    "scenarioId": "fixed-route-60-seconds",
+    "graphicsApi": "DX12",
+    "antiCheatStatus": "not-applicable"
+  },
+  "protocol": {
+    "protocolVersion": "1.0-draft",
+    "comparisonContextId": "38AB4587C046A05C5B3455413424B1FEB51F252B4B5BA5F5F22482BF093EFC37",
+    "warmupSeconds": 30,
+    "captureSeconds": 60,
+    "repetitionIndex": 1,
+    "plannedRepetitions": 3,
+    "captureSequenceIndex": 1,
+    "slowFrameThresholdMs": 50
+  },
+  "environment": {
+    "windowsBuild": "synthetic",
+    "gpu": "synthetic",
+    "gpuDriver": "synthetic",
+    "displayMode": "2560x1440",
+    "refreshHz": 240,
+    "hags": "on",
+    "powerPlan": "Balanced",
+    "gameSettingsRelativePath": "settings\\test.json",
+    "gameSettingsHash": "3333333333333333333333333333333333333333333333333333333333333333",
+    "presentRuntime": "DXGI",
+    "presentMode": "Hardware: Independent Flip",
+    "frameGenerationState": "off",
+    "frameGenerationTechnology": "none",
+    "notes": "Synthetic example only; contains no live user data."
+  },
+  "configuration": {
+    "label": "baseline",
+    "role": "baseline",
+    "changedVariables": []
+  },
+  "evidence": {
+    "csvRelativePath": "captures\\test.csv",
+    "csvSha256": "4444444444444444444444444444444444444444444444444444444444444444"
+  },
+  "limitations": [
+    "Synthetic example; not a real performance claim."
+  ]
+}
+

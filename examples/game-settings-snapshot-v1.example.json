@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "game": {
+    "executableBaseName": "testgame.exe",
+    "buildId": "synthetic-build-1",
+    "graphicsApi": "DX12"
+  },
+  "environment": {
+    "displayMode": "2560x1440",
+    "refreshHz": 240,
+    "frameGenerationState": "off",
+    "frameGenerationTechnology": "none",
+    "frameGenerationEvidenceSource": "verified-config"
+  },
+  "settings": [
+    {
+      "key": "frameGeneration",
+      "value": "off",
+      "source": "verified-config"
+    },
+    {
+      "key": "frameLimit",
+      "value": "240",
+      "source": "verified-config"
+    },
+    {
+      "key": "qualityPreset",
+      "value": "High",
+      "source": "verified-config"
+    }
+  ]
+}
+

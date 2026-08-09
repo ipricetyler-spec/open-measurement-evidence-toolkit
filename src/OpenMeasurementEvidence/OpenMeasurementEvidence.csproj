@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <AssemblyName>OpenMeasurementEvidence</AssemblyName>
+    <RootNamespace>OpenMeasurementEvidence</RootNamespace>
+    <Description>Strict, bounded validation and offline analysis for reproducible PC performance evidence.</Description>
+    <PackageId>OpenMeasurementEvidence</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Project maintainers</Authors>
+    <IsPackable>true</IsPackable>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <DefineConstants>MEASUREMENT_TESTS</DefineConstants>
+  </PropertyGroup>
+</Project>

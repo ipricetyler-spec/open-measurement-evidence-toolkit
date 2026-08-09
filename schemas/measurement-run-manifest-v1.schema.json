@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:open-measurement-evidence:schema:measurement-run-manifest:v1",
+  "title": "Measurement Run Manifest v1",
+  "description": "Local evidence record for one read-only gaming-PC performance capture. The placeholder ID must be replaced before publication.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "runId",
+    "createdUtc",
+    "capture",
+    "game",
+    "protocol",
+    "environment",
+    "configuration",
+    "evidence",
+    "limitations"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "runId": { "type": "string", "format": "uuid" },
+    "createdUtc": { "type": "string", "format": "date-time" },
+    "capture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "sourceVersion", "sourceSha256", "captureSchemaVersion", "timingDefinitionVersion", "timingBasis", "targetProcessId", "targetSwapChainAddress", "sessionName", "noTrackInput", "capturePolicyHash", "captureInvocationHash"],
+      "properties": {
+        "source": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "sourceVersion": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "sourceSha256": { "$ref": "#/$defs/sha256" },
+        "captureSchemaVersion": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "timingDefinitionVersion": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "timingBasis": { "enum": ["DisplayedTime", "MsBetweenDisplayChange", "MsBetweenPresents"] },
+        "targetProcessId": { "type": "integer", "minimum": 1 },
+        "targetSwapChainAddress": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "sessionName": { "type": "string", "pattern": "^[A-Za-z0-9._-]{8,128}$" },
+        "noTrackInput": { "const": true },
+        "capturePolicyHash": { "$ref": "#/$defs/sha256" },
+        "captureInvocationHash": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "game": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["executableBaseName", "buildId", "scenarioId", "graphicsApi", "antiCheatStatus"],
+      "properties": {
+        "executableBaseName": { "type": "string", "maxLength": 255, "pattern": "^[^\\\\/:*?\"<>|]{1,251}\\.[Ee][Xx][Ee]$" },
+        "buildId": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "scenarioId": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "graphicsApi": { "enum": ["DX9", "DX11", "DX12", "OpenGL", "Vulkan", "Other", "Unknown"] },
+        "antiCheatStatus": { "enum": ["not-applicable", "validated-compatible", "experimental", "unknown-blocked"] }
+      }
+    },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocolVersion", "comparisonContextId", "warmupSeconds", "captureSeconds", "repetitionIndex", "plannedRepetitions", "captureSequenceIndex", "slowFrameThresholdMs"],
+      "properties": {
+        "protocolVersion": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "comparisonContextId": { "$ref": "#/$defs/sha256" },
+        "warmupSeconds": { "type": "integer", "minimum": 0, "maximum": 3600 },
+        "captureSeconds": { "type": "integer", "minimum": 30, "maximum": 7200 },
+        "repetitionIndex": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "plannedRepetitions": { "type": "integer", "minimum": 3, "maximum": 20 },
+        "captureSequenceIndex": { "type": "integer", "minimum": 1, "maximum": 100 },
+        "slowFrameThresholdMs": { "type": "number", "exclusiveMinimum": 0, "maximum": 1000 }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["windowsBuild", "gpu", "gpuDriver", "displayMode", "refreshHz", "hags", "powerPlan", "gameSettingsRelativePath", "gameSettingsHash", "presentRuntime", "presentMode", "frameGenerationState", "frameGenerationTechnology"],
+      "properties": {
+        "windowsBuild": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "gpu": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "gpuDriver": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "displayMode": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "refreshHz": { "type": "number", "exclusiveMinimum": 0, "maximum": 1000 },
+        "hags": { "enum": ["on", "off", "unknown"] },
+        "powerPlan": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "gameSettingsRelativePath": { "$ref": "#/$defs/safeRelativePath" },
+        "gameSettingsHash": { "$ref": "#/$defs/sha256" },
+        "presentRuntime": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "presentMode": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "frameGenerationState": { "enum": ["off", "on", "mixed", "unknown"] },
+        "frameGenerationTechnology": { "enum": ["none", "intel-xess-fg", "amd-afmf", "nvidia-dlss-fg", "unknown"] },
+        "notes": { "type": "string", "maxLength": 2000 }
+      }
+    },
+    "configuration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "role", "changedVariables"],
+      "properties": {
+        "label": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "role": { "enum": ["baseline", "candidate"] },
+        "changedVariables": {
+          "type": "array",
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1, "maxLength": 256 }
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["csvRelativePath", "csvSha256"],
+      "properties": {
+        "csvRelativePath": { "$ref": "#/$defs/safeRelativePath" },
+        "csvSha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1, "maxLength": 500 },
+      "maxItems": 50
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" },
+    "safeRelativePath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:)(?![\\\\/])(?!.*(?:^|[\\\\/])\\.\\.(?:[\\\\/]|$))[^\\u0000-\\u001F]+$"
+    }
+  }
+}
