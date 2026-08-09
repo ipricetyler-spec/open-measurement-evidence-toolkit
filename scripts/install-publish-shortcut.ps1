@@ -38,3 +38,20 @@ $workflowShortcut.Save()
 
 Write-Host "Created shortcut: $workflowShortcutPath"
 Write-Host "Target: $workflowTarget"
+
+$healthShortcutPath = Join-Path $desktop 'Open Source Health Check.lnk'
+$healthTarget = Join-Path $root 'scripts\open-source-health.bat'
+if (-not (Test-Path $healthTarget)) {
+    throw "Expected health script not found: $healthTarget"
+}
+
+$healthShortcut = $shell.CreateShortcut($healthShortcutPath)
+$healthShortcut.TargetPath = $healthTarget
+$healthShortcut.WorkingDirectory = $root
+$healthShortcut.Arguments = ""
+$healthShortcut.Description = "Run open-source health snapshot for the toolkit"
+$healthShortcut.IconLocation = "shell32.dll,134"
+$healthShortcut.Save()
+
+Write-Host "Created shortcut: $healthShortcutPath"
+Write-Host "Target: $healthTarget"

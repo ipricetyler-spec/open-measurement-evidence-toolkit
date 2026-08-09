@@ -20,6 +20,12 @@ Install a desktop shortcut for no-path-run access:
 .\scripts\install-publish-shortcut.ps1
 ```
 
+That installer now creates three desktop shortcuts:
+
+- `Publish Open Measurement Evidence Toolkit.lnk`
+- `Run Open Source Workflow.lnk`
+- `Open Source Health Check.lnk`
+
 The default launcher behavior opens the repository page when finished. Disable for background runs:
 
 ```powershell
@@ -39,6 +45,18 @@ This runs `maintain.ps1` and then publish.
 ```
 
 Use `-SkipBuild` on systems without .NET installed.
+
+Preflight health verification:
+
+```powershell
+.\scripts\open-source-health.ps1
+```
+
+or
+
+```powershell
+.\scripts\open-source-health.bat
+```
 
 If you'd rather keep it scripted, use:
 

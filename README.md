@@ -60,6 +60,21 @@ This creates:
 
 - `Publish Open Measurement Evidence Toolkit.lnk`
 - `Run Open Source Workflow.lnk`
+- `Open Source Health Check.lnk`
+
+## Health check
+
+```powershell
+.\scripts\open-source-health.ps1
+```
+
+Or one-click:
+
+```powershell
+.\scripts\open-source-health.bat
+```
+
+The check verifies key files, workflow presence, clean git state, and repository readiness.
 
 ## Build and test
 
