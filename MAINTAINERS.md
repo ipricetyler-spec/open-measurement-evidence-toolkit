@@ -1,74 +1,29 @@
 # Maintainers
 
-The public maintainer identity and contact links will be added when the repository is created. Until then, this local package is not accepting external contributions.
+Primary maintainer: `ipricetyler-spec`.
+
+This public repository accepts focused issues and pull requests that stay within the offline evidence-validation boundary described in [README.md](README.md), [CONTRIBUTING.md](CONTRIBUTING.md), and [SECURITY.md](SECURITY.md).
 
 Maintainer responsibilities include issue triage, pull-request review, release management, security response, compatibility decisions, and keeping project claims aligned with evidence.
 
-### Publish bootstrap (local)
+## Local maintenance and publish helpers
 
-After repository identity is confirmed, use the one-click launcher:
-
-```powershell
-.\scripts\publish-one-click.bat
-```
-
-This will prompt for a PAT once per run if one is not already set in `$env:GITHUB_TOKEN`.
-
-Install a desktop shortcut for no-path-run access:
-
-```powershell
-.\scripts\install-publish-shortcut.ps1
-```
-
-That installer now creates three desktop shortcuts:
-
-- `Publish Open Measurement Evidence Toolkit.lnk`
-- `Run Open Source Workflow.lnk`
-- `Open Source Health Check.lnk`
-
-The default launcher behavior opens the repository page when finished. Disable for background runs:
-
-```powershell
-.\scripts\publish-one-click.ps1 -OpenAfterPublish:$false
-```
-
-For full checks plus publish (health + maintenance + publish):
+Run the deterministic maintenance workflow before proposing a release or publishing repository changes:
 
 ```powershell
 .\scripts\run-open-source-workflow.ps1
 ```
 
-This runs `open-source-health.ps1`, `maintain.ps1`, and then publish.
-
-Skip the health check for quick local iterations if needed:
-
-```powershell
-.\scripts\run-open-source-workflow.ps1 -RunHealthCheck:$false
-```
-
-```powershell
-.\scripts\run-open-source-workflow.ps1 -SkipBuild
-```
-
-Use `-SkipBuild` on systems without .NET installed.
-
-Preflight health verification:
+Run only the repository health preflight:
 
 ```powershell
 .\scripts\open-source-health.ps1
 ```
 
-or
+On systems without the .NET 8 SDK, `-SkipBuild` permits boundary/schema checks only. That mode is not equivalent to a successful full build/test verification and must not be reported as one.
 
-```powershell
-.\scripts\open-source-health.bat
-```
+The repository also contains one-click Windows helpers for routine repository publishing. Those helpers do not override release authorization, signing boundaries, required test evidence, or a documented stop-on-failure gate.
 
-If you'd rather keep it scripted, use:
+## Release discipline
 
-```powershell
-$env:GITHUB_TOKEN = "<your-token>"
-.\scripts\publish-one-click.ps1
-```
-
-Token should include `repo` scope, and `workflow` if workflow files will be introduced later.
+A release candidate must be tied to an exact source revision and its verification evidence. If a material release gate fails, preserve that failed cycle as evidence; do not silently rebuild, re-sign, retag, or represent a later artifact as the same reviewed candidate. A later material attempt is a new release cycle and should be recorded as such.
