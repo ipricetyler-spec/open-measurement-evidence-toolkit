@@ -10,6 +10,7 @@ Set-StrictMode -Version Latest
 if (-not $RepoPath) {
     $RepoPath = Split-Path -Parent $PSScriptRoot
 }
+$RepoPath = (Resolve-Path $RepoPath).Path
 
 $requiredFiles = @(
     "README.md",
@@ -32,7 +33,7 @@ Write-Host "- Repository: https://github.com/$Owner/$Repo"
 Write-Host "- Timestamp: $(Get-Date -Format o)"
 
 if (Test-Path ".git") {
-    $status = git status --short
+    $status = git -c "safe.directory=$RepoPath" status --short
     if ($status) {
         Write-Host "WARN: Working tree has uncommitted changes."
         Write-Host $status

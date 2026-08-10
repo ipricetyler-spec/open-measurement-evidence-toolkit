@@ -1,8 +1,8 @@
 # Maintainers
 
-Primary maintainer: `ipricetyler-spec`.
+Primary maintainer: `ipricetyler-spec` (GitHub).
 
-This public repository accepts focused issues and pull requests that stay within the offline evidence-validation boundary described in [README.md](README.md), [CONTRIBUTING.md](CONTRIBUTING.md), and [SECURITY.md](SECURITY.md).
+This public repository accepts focused issues and pull requests that stay within the offline evidence-validation boundary described in [README.md](README.md), [CONTRIBUTING.md](CONTRIBUTING.md), and [SECURITY.md](SECURITY.md). For maintainer contact and security reporting, use the channels published on the maintainer's GitHub profile and in [SECURITY.md](SECURITY.md).
 
 Maintainer responsibilities include issue triage, pull-request review, release management, security response, compatibility decisions, and keeping project claims aligned with evidence.
 

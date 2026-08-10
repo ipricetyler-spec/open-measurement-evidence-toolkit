@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:open-measurement-evidence:schema:measurement-run-manifest:v1",
   "title": "Measurement Run Manifest v1",
-  "description": "Local evidence record for one read-only gaming-PC performance capture. The placeholder ID must be replaced before publication.",
+  "description": "Local evidence record for one read-only gaming-PC performance capture.",
   "type": "object",
   "additionalProperties": false,
   "required": [
