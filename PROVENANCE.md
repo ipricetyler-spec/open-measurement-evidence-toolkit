@@ -23,8 +23,6 @@ The extraction applies vendor-neutral namespaces and terminology and adds a publ
 
 The implementation uses only .NET platform APIs. It parses documented CSV field names and serialized values commonly produced by PresentMon-compatible exporters, but contains no PresentMon source or binary. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-## Remaining legal gate
+## Distribution authority and license
 
-The repository should be published only after confirming licensing authority for distribution under the selected license:
-
-- Apache-2.0 (selected August 9, 2026).
+The project owner reviewed the extracted source boundary and selected Apache License 2.0 for this public repository on August 9, 2026. The repository is now publicly distributed under that license. Future contributions must comply with [CONTRIBUTING.md](CONTRIBUTING.md), and any newly introduced third-party material must be reviewed before merge and reflected in this provenance record or the third-party notices as appropriate.
