@@ -1,0 +1,45 @@
+name: pr-lint-format
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: pr-lint-format-${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  lint-and-format:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af6772620
+        with:
+          fetch-depth: 0
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Verify formatting without rewriting
+        shell: pwsh
+        run: |
+          $baseRef = '${{ github.base_ref || 'main' }}'
+          $diffFiles = git diff --name-only "origin/$baseRef...HEAD" -- '*.cs'
+          if ($diffFiles) {
+            Write-Output "Formatting check target count: $($diffFiles.Count)"
+            dotnet format --verify-no-changes --no-restore --verbosity normal --include $diffFiles
+          } else {
+            Write-Output "No C# file changes detected vs origin/$baseRef; skipping dotnet format."
+          }
+
+      - name: Run deterministic repository checks
+        shell: pwsh
+        run: ./scripts/maintain.ps1 -SkipBuild
+

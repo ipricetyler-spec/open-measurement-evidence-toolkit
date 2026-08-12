@@ -1,0 +1,68 @@
+name: weekly-oss-maintenance
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: read
+  issues: write
+  security-events: read
+
+concurrency:
+  group: weekly-oss-maintenance-${{ github.repository }}
+  cancel-in-progress: true
+
+jobs:
+  health-report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af6772620
+
+      - name: Build weekly maintenance report
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: pwsh
+        run: |
+          ./scripts/open-source-health-report.ps1 `
+            -Owner "ipricetyler-spec" `
+            -Repo "open-measurement-evidence-toolkit" `
+            -DefaultBranch "main" `
+            -OutputMarkdown "artifacts/weekly-oss-health-report.md" `
+            -OutputJson "artifacts/weekly-oss-health-report.json" `
+            -MaintainerMention "ipricetyler-spec" `
+            -RemoteLinkTimeoutSec 18
+
+      - name: Upload report artifacts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: weekly-oss-health-report
+          path: artifacts/weekly-oss-health-report.*
+          if-no-files-found: error
+          retention-days: 60
+
+      - name: Print actionable summary
+        if: always()
+        shell: pwsh
+        run: |
+          if (Test-Path "artifacts/weekly-oss-health-report.json") {
+            $report = Get-Content -Raw "artifacts/weekly-oss-health-report.json" | ConvertFrom-Json
+            Write-Output "Generated report: artifacts/weekly-oss-health-report.md"
+            Write-Output "Actionable items: $($report.actionable_items.Count)"
+            if ($report.actionable_items.Count -gt 0) {
+              $report.actionable_items | ForEach-Object { Write-Output "- $_" }
+            } else {
+              Write-Output "- None"
+            }
+          } else {
+            Write-Output "Report JSON not found."
+            if ("${{ github.event_name }}" -eq "schedule") {
+              exit 1
+            }
+          }

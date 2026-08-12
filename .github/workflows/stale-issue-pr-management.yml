@@ -1,0 +1,45 @@
+name: stale-issue-pr-management
+
+on:
+  schedule:
+    - cron: "30 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: stale-issue-pr-management-${{ github.repository }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  manage-stale-items:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Mark stale issues and PRs
+        uses: actions/stale@5bef64f19d7facfb25b37b414482c7164d639639
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          stale-issue-message: >
+            This issue has been inactive for 90 days and may be closed soon.
+            If this is still relevant, comment or add `keep-open`.
+          stale-pr-message: >
+            This PR has been inactive for 90 days and may be closed soon.
+            If work remains, add a new comment or `keep-open`.
+          close-issue-message: >
+            Closing as stale after 14 additional days of inactivity.
+          close-pr-message: >
+            Closing as stale after 14 additional days of inactivity.
+          stale-issue-label: stale
+          stale-pr-label: stale
+          days-before-stale: 90
+          days-before-pr-stale: 90
+          days-before-close: 14
+          days-before-pr-close: 14
+          exempt-issue-labels: "pinned,keep-open,security,high-priority"
+          exempt-pr-labels: "pinned,keep-open,security,high-priority"
+          exempt-all-assignees: true
+          exempt-all-milestones: true
+          operations-per-run: 200
