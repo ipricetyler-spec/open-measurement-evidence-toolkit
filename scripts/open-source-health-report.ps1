@@ -650,7 +650,8 @@ try {
         }
     } else {
         $branchProtectionState.has_protection = $true
-        $requiredReviews = $branchResponse.Data.required_pull_request_reviews
+        $requiredReviewsProperty = $branchResponse.Data.PSObject.Properties['required_pull_request_reviews']
+        $requiredReviews = if ($null -ne $requiredReviewsProperty) { $requiredReviewsProperty.Value } else { $null }
         if ($null -ne $requiredReviews) {
             $branchProtectionState.required_approvals = $requiredReviews.required_approving_review_count
             $branchProtectionState.dismiss_stale_reviews = $requiredReviews.dismiss_stale_reviews
@@ -661,7 +662,7 @@ try {
                 Add-Actionable "Branch protection does not dismiss stale reviews."
             }
         } else {
-            Add-Actionable "Branch protection review requirements are not configured."
+            Add-Info "Branch protection does not require approving reviews."
         }
 
         $requiredChecks = $branchResponse.Data.required_status_checks
