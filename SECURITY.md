@@ -12,7 +12,7 @@ The Windows held-file checks reduce time-of-check/time-of-use and link/reparse-p
 
 ## Reporting a vulnerability
 
-Do not open a public issue for a suspected vulnerability. Use GitHub's private vulnerability reporting feature after the public repository is created. If that feature is unavailable, contact the maintainer through the security contact published on the maintainer's GitHub profile.
+Do not open a public issue for a suspected vulnerability. Use GitHub's private vulnerability reporting feature when it is enabled for this repository. If that feature is unavailable, contact the maintainer through the security contact published on the maintainer's GitHub profile.
 
 Include affected version or commit, reproduction steps, impact, and any suggested mitigation. Please avoid accessing data or systems you do not own or have permission to test.
 
